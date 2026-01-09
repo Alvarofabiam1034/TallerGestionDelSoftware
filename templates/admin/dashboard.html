@@ -1,0 +1,86 @@
+{% extends "base.html" %}
+
+{% block title %}Dashboard Admin - SIGR{% endblock %}
+
+{% block content %}
+<div class="mb-6">
+    <h1 class="text-3xl font-bold text-gray-800">Panel de Administración</h1>
+    <p class="text-gray-600">Bienvenido, {{ session.get('username') }}</p>
+</div>
+
+<div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+    <div class="bg-white rounded-lg shadow-md p-6">
+        <div class="flex items-center justify-between">
+            <div>
+                <p class="text-gray-600 text-sm font-medium">Total Pedidos</p>
+                <p class="text-3xl font-bold text-gray-800">{{ total_pedidos }}</p>
+            </div>
+            <div class="bg-blue-100 rounded-full p-3">
+                <svg class="w-8 h-8 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"></path>
+                </svg>
+            </div>
+        </div>
+    </div>
+
+    <div class="bg-white rounded-lg shadow-md p-6">
+        <div class="flex items-center justify-between">
+            <div>
+                <p class="text-gray-600 text-sm font-medium">Pedidos Pendientes</p>
+                <p class="text-3xl font-bold text-orange-600">{{ pedidos_pendientes }}</p>
+            </div>
+            <div class="bg-orange-100 rounded-full p-3">
+                <svg class="w-8 h-8 text-orange-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                </svg>
+            </div>
+        </div>
+    </div>
+
+    <div class="bg-white rounded-lg shadow-md p-6">
+        <div class="flex items-center justify-between">
+            <div>
+                <p class="text-gray-600 text-sm font-medium">Reservas Activas</p>
+                <p class="text-3xl font-bold text-green-600">{{ total_reservas }}</p>
+            </div>
+            <div class="bg-green-100 rounded-full p-3">
+                <svg class="w-8 h-8 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
+                </svg>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+    <div class="bg-white rounded-lg shadow-md p-6">
+        <h2 class="text-xl font-semibold text-gray-800 mb-4">Accesos Rápidos</h2>
+        <div class="space-y-3">
+            <a href="{{ url_for('admin_menu') }}" class="block w-full bg-blue-600 text-white text-center py-2 px-4 rounded hover:bg-blue-700 transition">
+                Gestionar Menú
+            </a>
+            <a href="{{ url_for('admin_pedidos') }}" class="block w-full bg-green-600 text-white text-center py-2 px-4 rounded hover:bg-green-700 transition">
+                Ver Pedidos
+            </a>
+            <a href="{{ url_for('admin_reservas') }}" class="block w-full bg-purple-600 text-white text-center py-2 px-4 rounded hover:bg-purple-700 transition">
+                Ver Reservas
+            </a>
+            <a href="{{ url_for('admin_reporte_ventas') }}" class="block w-full bg-indigo-600 text-white text-center py-2 px-4 rounded hover:bg-indigo-700 transition">
+                Reportes de Ventas
+            </a>
+            <a href="{{ url_for('admin_cerrar_caja') }}" class="block w-full bg-red-600 text-white text-center py-2 px-4 rounded hover:bg-red-700 transition">
+                Cerrar Caja
+            </a>
+        </div>
+    </div>
+
+    <div class="bg-white rounded-lg shadow-md p-6">
+        <h2 class="text-xl font-semibold text-gray-800 mb-4">Información del Sistema</h2>
+        <div class="space-y-2 text-gray-600">
+            <p><strong>Rol:</strong> Administrador</p>
+            <p><strong>Usuario:</strong> {{ session.get('username') }}</p>
+        </div>
+    </div>
+</div>
+{% endblock %}
+

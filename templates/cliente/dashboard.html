@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+
+{% block title %}Dashboard Cliente - SIGR{% endblock %}
+
+{% block content %}
+<div class="mb-6">
+    <h1 class="text-3xl font-bold text-gray-800">Bienvenido, {{ session.get('username') }}</h1>
+    <p class="text-gray-600">Panel de Cliente</p>
+</div>
+
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+    <div class="bg-white rounded-lg shadow-md p-6">
+        <h2 class="text-xl font-semibold text-gray-800 mb-4">Menú Digital</h2>
+        <p class="text-gray-600 mb-4">Explora nuestra selección de platos y bebidas disponibles.</p>
+        <a href="{{ url_for('menu_publico') }}" class="inline-block bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700 transition">
+            Ver Menú
+        </a>
+    </div>
+
+    <div class="bg-white rounded-lg shadow-md p-6">
+        <h2 class="text-xl font-semibold text-gray-800 mb-4">Hacer una Reserva</h2>
+        <p class="text-gray-600 mb-4">Reserva una mesa para disfrutar de nuestros servicios.</p>
+        <a href="{{ url_for('cliente_reserva_nueva') }}" class="inline-block bg-green-600 text-white px-6 py-2 rounded-lg hover:bg-green-700 transition">
+            Nueva Reserva
+        </a>
+    </div>
+</div>
+
+<div class="mt-8 bg-blue-50 border border-blue-200 rounded-lg p-6">
+    <h3 class="text-lg font-semibold text-blue-800 mb-2">Información</h3>
+    <p class="text-sm text-blue-700">
+        Como cliente, puedes explorar nuestro menú digital y realizar reservas para nuestras mesas. 
+        Si necesitas realizar un pedido, comunícate con nuestro personal de servicio.
+    </p>
+</div>
+{% endblock %}
+

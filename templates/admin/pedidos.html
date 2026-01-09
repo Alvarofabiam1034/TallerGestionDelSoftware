@@ -1,0 +1,68 @@
+{% extends "base.html" %}
+
+{% block title %}Pedidos - SIGR{% endblock %}
+
+{% block content %}
+<div class="mb-6">
+    <h1 class="text-3xl font-bold text-gray-800">Gestión de Pedidos</h1>
+    <p class="text-gray-600">Administra todos los pedidos del sistema</p>
+</div>
+
+{% if pedidos %}
+<div class="space-y-4">
+    {% for pedido in pedidos %}
+    <div class="bg-white rounded-lg shadow-md p-6">
+        <div class="flex justify-between items-start mb-4">
+            <div>
+                <h3 class="text-xl font-semibold text-gray-800">Pedido #{{ pedido.id }}</h3>
+                <p class="text-sm text-gray-600">Mesa: <span class="font-medium">{{ pedido.mesa }}</span></p>
+                <p class="text-sm text-gray-600">Mesero: <span class="font-medium">{{ pedido.mesero.username }}</span></p>
+                <p class="text-sm text-gray-600">Fecha: <span class="font-medium">{{ pedido.created_at.strftime('%Y-%m-%d %H:%M') }}</span></p>
+            </div>
+            <div>
+                <span class="px-3 py-1 rounded-full text-sm font-medium
+                    {% if pedido.estado == 'Pendiente' %}bg-yellow-100 text-yellow-800
+                    {% elif pedido.estado == 'En preparación' %}bg-blue-100 text-blue-800
+                    {% elif pedido.estado == 'Servido' %}bg-green-100 text-green-800
+                    {% endif %}">
+                    {{ pedido.estado }}
+                </span>
+            </div>
+        </div>
+
+        <div class="mb-4">
+            <h4 class="font-medium text-gray-700 mb-2">Ítems:</h4>
+            <ul class="list-disc list-inside space-y-1 text-gray-600">
+                {% for item in pedido.items %}
+                <li>{{ item.cantidad }}x {{ item.menu_item.nombre }} - ${{ "%.2f"|format(item.precio_unitario * item.cantidad) }}</li>
+                {% endfor %}
+            </ul>
+        </div>
+
+        <div class="flex justify-between items-center">
+            <div>
+                <p class="text-lg font-bold text-gray-800">
+                    Total: ${{ "%.2f"|format(pedido.calcular_total()) }}
+                </p>
+            </div>
+            <form method="POST" action="{{ url_for('cambiar_estado_pedido', id=pedido.id) }}" class="flex space-x-2">
+                <select name="estado" class="px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500">
+                    <option value="Pendiente" {% if pedido.estado == 'Pendiente' %}selected{% endif %}>Pendiente</option>
+                    <option value="En preparación" {% if pedido.estado == 'En preparación' %}selected{% endif %}>En preparación</option>
+                    <option value="Servido" {% if pedido.estado == 'Servido' %}selected{% endif %}>Servido</option>
+                </select>
+                <button type="submit" class="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition">
+                    Actualizar Estado
+                </button>
+            </form>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+{% else %}
+<div class="bg-yellow-100 border border-yellow-400 text-yellow-700 px-4 py-3 rounded">
+    <p>No hay pedidos registrados.</p>
+</div>
+{% endif %}
+{% endblock %}
+
